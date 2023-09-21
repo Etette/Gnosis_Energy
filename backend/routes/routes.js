@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const routes = require('../utils/gnosisContract'); 
+const randNum = require('../utils/utils');
 
 // Define routes
 
@@ -49,7 +50,7 @@ router.post('/buyEnergy', async (req, res) => {
   const amount = req.body.amount;
   try {
     const result = await routes.buyEnergy(amount);
-    return res.status(200).json({ success: true, data: result });
+    return res.status(200).json({ success: true, data: result, energy_token: randNum() });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
   }

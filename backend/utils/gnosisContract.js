@@ -83,8 +83,6 @@ exports.buyEnergy = async (amount) => {
         });
         // Wait for the transaction to be mined
         const receipt = await pay.wait();
-        // console.log(`success: ${true}\n \t Hash: ${receipt.transactionHash}`);
-        // console.log(receipt);
         return receipt;
     } catch (e) {
         console.log('error', e.message);
