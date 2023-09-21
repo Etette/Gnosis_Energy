@@ -36,6 +36,6 @@ React.js, Tailwind css, Redux toolkit
  
 Bonus
  
-- Demo: <Link>
-- Video: <Link>
+- Demo: https://gnosis-chain.vercel.app/
+- Video: https://youtu.be/KXZoG_KK_5s?si=QdS2eekqdB49LwD7
 - Tweet: <Link>
