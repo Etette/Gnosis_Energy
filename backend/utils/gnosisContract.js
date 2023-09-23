@@ -25,7 +25,7 @@ const provider = new ethers.JsonRpcProvider(_provider);
 console.log(provider);
 
 // The address of smart contract
-const contractAddress = process.env.CONTRACT_ADDRESS;
+const contractAddress = '0x822D15135492985B195CE96EC0190d51264daC92';
 
 // get contract abi
 abi = contract_abi.abi;
