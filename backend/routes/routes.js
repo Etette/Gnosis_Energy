@@ -4,6 +4,19 @@ const routes = require('../utils/gnosisContract');
 const randNum = require('../utils/utils');
 
 // Define routes
+// accounts
+const account = null;
+
+router.post('/wallet', async (req, res) => {
+  const {accounts} = req.body;
+  if (accounts){
+    account = accounts;
+    console.log('wallet connect successful');
+    return true;
+  }
+  console.log('wallet connect failed');
+  return false;
+});
 
 router.get('/userTransactions/:address', async (req, res) => {
   const address = req.params.address;
@@ -65,5 +78,5 @@ router.post('/withdraw', async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
-
+export {account};
 module.exports = router;
