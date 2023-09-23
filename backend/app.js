@@ -11,11 +11,11 @@ app.use(bodyParser.json());
 
 app.use('/api/v1', router);
 
-port = 3000;
-const server = (port) => {
+PORT = 3000;
+const server = (PORT) => {
     try {
-        app.listen(port, () => {
-            console.log(`server up and running on port ${port}`);
+        app.listen(PORT, () => {
+            console.log(`server up and running on port ${PORT}`);
         });
     } catch (e) {
         console.log(`ERR: server not started\n ERR: ${e}`);
@@ -23,4 +23,4 @@ const server = (port) => {
     }
 };
 
-server(port)
+server(PORT)
