@@ -18,7 +18,7 @@ dotenv.config({path: './.env'});
 // }
 
 // Connect to an Ethereum node
-const _provider = process.env.PROVIDER;
+const _provider = 'https://rpc.chiadochain.net';
 console.log('_p',_provider);
 
 const provider = new ethers.JsonRpcProvider(_provider);
