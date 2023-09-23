@@ -5,7 +5,7 @@ const randNum = require('../utils/utils');
 
 // Define routes
 // accounts
-const account = null;
+exports.account = null;
 
 router.post('/wallet', async (req, res) => {
   const {accounts} = req.body;
@@ -78,5 +78,5 @@ router.post('/withdraw', async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
-export {account};
+// export default {account};
 module.exports = router;

@@ -1,9 +1,9 @@
 const {ethers, Wallet} = require('ethers');
 const contract_abi = require('../GnosisEnergy.json');
-const {account} = require('../routes/routes');
+const account = require('../routes/routes');
 const XDai = require('../utils/utils');
 const dotenv = require('dotenv');
-dotenv.config({path: '../.env'});
+dotenv.config({path: './.env'});
 
 
 // const initializeProvider = async() => {
@@ -19,7 +19,7 @@ dotenv.config({path: '../.env'});
 
 // Connect to an Ethereum node
 const _provider = process.env.PROVIDER;
-console.log(_provider);
+console.log('_p',_provider);
 
 const provider = new ethers.JsonRpcProvider(_provider);
 console.log(provider);
