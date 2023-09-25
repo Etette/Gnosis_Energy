@@ -8,7 +8,7 @@ const routes = require('../utils/gnosisContract');
 exports.account = null;
 
 router.post('/wallet', async (req, res) => {
-  const {accounts} = req.body;
+  const {accounts} = req.body.accounts;
   if (accounts){
     account = accounts;
     console.log('wallet connect successful');
@@ -19,7 +19,7 @@ router.post('/wallet', async (req, res) => {
 });
 
 router.get('/transactions/:address', async (req, res) => {
-  const address = req.body.address;
+  const address = req.params.address;
   try {
     const result = await routes.getUserTransactions(address);
     if(!result){
@@ -50,7 +50,7 @@ router.get('/owner', async (req, res) => {
 });
 
 router.post('/updatePrice', async (req, res) => {
-  const newPrice = req.body.newPrice;
+  const newPrice = req.param.newPrice;
   try {
     const result = await routes.updatePrice(newPrice);
     return res.status(201).json({ success: true, data: result });
@@ -60,7 +60,7 @@ router.post('/updatePrice', async (req, res) => {
 });
 
 router.post('/buyEnergy', async (req, res) => {
-  const amount = req.body.amount;
+  const amount = req.param.amount;
   try {
     const result = await routes.buyEnergy(amount);
     return res.status(200).json({ success: true, data: result});
@@ -70,7 +70,7 @@ router.post('/buyEnergy', async (req, res) => {
 });
 
 router.post('/withdraw', async (req, res) => {
-  const address = req.body.address;
+  const address = req.param.address;
   try {
     const result = await routes.withdraw(address);
     return res.status(200).json({ success: true, data: result });
