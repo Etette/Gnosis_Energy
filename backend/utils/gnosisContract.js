@@ -2,6 +2,7 @@ const {ethers, Wallet} = require('ethers');
 const contract_abi = require('../GnosisEnergy.json');
 const account = require('../routes/routes');
 const XDai = require('../utils/utils');
+const randNum = require('../utils/utils');
 const dotenv = require('dotenv');
 dotenv.config({path: './.env'});
 
@@ -117,7 +118,7 @@ exports.buyEnergy = async (amount) => {
         });
         // Wait for the transaction to be mined
         const receipt = await pay.wait();
-        return receipt;
+        return {receipt: reciept, token: randNum()};
     } catch (e) {
         console.log('error', e.message);
         return e.message;
