@@ -17,7 +17,7 @@ try {
   }
   console.log('wallet connect failed');
   return false;
-  } caatch (e) {
+  } catch (e) {
     return {success: false, err: e.message}
   }
 });
