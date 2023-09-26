@@ -8,20 +8,24 @@ const routes = require('../utils/gnosisContract');
 const account = null;
 
 router.post('/wallet', async (req, res) => {
-  const {accounts} = req.body;
-  if (accounts){
+  const accounts = req.body;
+try {
+    if (accounts){
     account = accounts;
     console.log('wallet connect successful', accounts);
     return true;
   }
   console.log('wallet connect failed');
   return false;
+  } catch (e) {
+    return {success: false, err: e.message}
+  }
 });
 
 router.get('/transactions/:address', async (req, res) => {
-  const address = req.body.address;
+  const _address = req.params.address;
   try {
-    const result = await routes.getUserTransactions(address);
+    const result = await routes.getUserTransactions(_address);
     if(!result){
         return res.status(400).json({success: false})
     }
@@ -60,7 +64,7 @@ router.post('/updatePrice', async (req, res) => {
 });
 
 router.post('/buyEnergy', async (req, res) => {
-  const amount = req.body.amount;
+  const amount = req.body;
   try {
     const result = await routes.buyEnergy(amount);
     return res.status(200).json({ success: true, data: result});
