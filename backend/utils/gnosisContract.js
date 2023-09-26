@@ -1,6 +1,6 @@
 const {ethers, Wallet} = require('ethers');
 const contract_abi = require('../GnosisEnergy.json');
-const account = require('../routes/routes');
+const {account} = require('../routes/routes');
 const XDai = require('../utils/utils');
 const randNum = require('../utils/utils');
 const dotenv = require('dotenv');

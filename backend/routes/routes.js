@@ -8,7 +8,7 @@ const routes = require('../utils/gnosisContract');
 exports.account = null;
 
 router.post('/wallet', async (req, res) => {
-  const {accounts} = req.body;
+  const accounts = req.body;
   if (accounts){
     account = accounts;
     console.log('wallet connect successful');
