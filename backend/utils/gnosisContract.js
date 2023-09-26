@@ -1,40 +1,10 @@
 const {ethers, Wallet} = require('ethers');
 const contract_abi = require('../GnosisEnergy.json');
-const {account} = require('../routes/routes');
 const XDai = require('../utils/utils');
 const randNum = require('../utils/utils');
 const dotenv = require('dotenv');
 dotenv.config({path: './.env'});
 
-
-// const initializeProvider = async() => {
-//     // Check if MetaMask is installed and available
-//     if (typeof window.ethereum !== 'undefined') {
-//       // Use MetaMask as a provider
-//       const provider = new ethers.providers.Web3Provider(window.ethereum);
-//       return provider;
-//     } else {
-//       throw new Error('MetaMask is not installed or not available.');
-//     }
-// }
-
-// Connect to an Ethereum node
-const _provider = 'https://rpc.chiadochain.net';
-console.log('_p',_provider);
-
-const provider = new ethers.JsonRpcProvider(_provider);
-console.log(provider);
-
-// The address of smart contract
-const contractAddress = '0x822D15135492985B195CE96EC0190d51264daC92';
-
-// get contract abi
-abi = contract_abi.abi;
-const contract = new ethers.Contract(contractAddress, abi, provider);
-
-// const mnemonic = process.env.MNEMONIC;
-// const mnemonicWallet = Wallet.fromPhrase(mnemonic);
-// console.log('wallet address', mnemonicWallet.address);
 
 const Fixtures = async () => {
     try {
@@ -47,12 +17,22 @@ const Fixtures = async () => {
     }
 }
 
-const _signer = account;
-//const signedContract = new ethers.Contract(contractAddress, abi, signer);
+console.log(Fixtures())
+const provider = 'https://rpc.chiadochain.net';
+//console.log(provider)
+const signer = Fixtures();
 
-// const _Signer = null;
-// const _signer = new ethers.Wallet(_Signer.privateKey, provider);
-const signedContract = new ethers.Contract(contractAddress, abi, _signer);
+
+// get contract abi
+abi = contract_abi.abi;
+
+// The address of smart contract
+const contractAddress = '0x822D15135492985B195CE96EC0190d51264daC92';
+const contract = new ethers.Contract(contractAddress, abi, provider);
+
+// const mnemonic = process.env.MNEMONIC;
+// const mnemonicWallet = Wallet.fromPhrase(mnemonic);
+// console.log('wallet address', mnemonicWallet.address);
 
 
 exports.getUserTransactions = async (address) => {
@@ -101,8 +81,9 @@ exports.getOwner = async () => {
 exports.updatePrice = async (newPrice) => {
     newPrice = XDai.parseXDai(newPrice);
     try {
-        const updatePrice = await signedContract.updateEnergyPrice(newPrice);
-        return updatePrice.toString();
+        const updatePrice = await contract.connect(signer).updateEnergyPrice(newPrice);
+        await updatePrice.wait();
+        return {success: true, msg: updatePrice};
     } catch (e) {
         console.log('error', e.message);
         return e.message;
@@ -113,12 +94,12 @@ exports.buyEnergy = async (amount) => {
     amount = XDai.parseXDai(amount);
     try {
         
-        const pay = await signedContract.makePayment({
+        const pay = await contract.connect(signer).makePayment({
             value: amount,
         });
         // Wait for the transaction to be mined
         const receipt = await pay.wait();
-        return {receipt: reciept, token: randNum()};
+        return {receipt: receipt, token: randNum()};
     } catch (e) {
         console.log('error', e.message);
         return e.message;
@@ -127,7 +108,7 @@ exports.buyEnergy = async (amount) => {
 
 exports.withdraw = async (address) => {
     try{
-        const _withdraw = await signedContract.withdrawFunds(address);
+        const _withdraw = await contract.connect(signer).withdrawFunds(address);
         const reciept = await _withdraw.wait();
         return reciept;
     } catch (e) {
