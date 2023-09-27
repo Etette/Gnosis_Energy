@@ -1,4 +1,4 @@
-const {ethers, Wallet} = require('ethers');
+const {ethers, Wallet, JsonRpcProvider} = require('ethers');
 const contract_abi = require('../GnosisEnergy.json');
 const XDai = require('../utils/utils');
 const randNum = require('../utils/utils');
@@ -17,11 +17,20 @@ const Fixtures = async () => {
     }
 }
 
-console.log(Fixtures())
-const provider = 'https://rpc.chiadochain.net';
-//console.log(provider)
-const signer = Fixtures();
+// console.log(Fixtures())
+const provider = new JsonRpcProvider('https://rpc.chiadochain.net');
+// console.log(provider);
+// //console.log(provider)
+// // const signer = Fixtures();
+const mnemonic = "frozen chronic report guilt choose yellow recipe orange mosquito box robust fire";
 
+const mnemonicWallet = ethers.Wallet.fromPhrase(mnemonic);
+console.log('pr.key', mnemonicWallet.privateKey);
+// console.log(mnemonicWallet.address);
+const signer = new ethers.Wallet(mnemonicWallet.privateKey, provider);
+
+
+// signer = ethers.JsonRpcSigner(provider)
 
 // get contract abi
 abi = contract_abi.abi;
@@ -29,9 +38,11 @@ abi = contract_abi.abi;
 // The address of smart contract
 const contractAddress = '0x822D15135492985B195CE96EC0190d51264daC92';
 const contract = new ethers.Contract(contractAddress, abi, provider);
+// const _sign = new ethers.Contract(contractAddress, abi, signer);
+// console.log(contract)
 
-// const mnemonic = process.env.MNEMONIC;
-// const mnemonicWallet = Wallet.fromPhrase(mnemonic);
+
+
 // console.log('wallet address', mnemonicWallet.address);
 
 
@@ -90,16 +101,18 @@ exports.updatePrice = async (newPrice) => {
     }
 }
 
-exports.buyEnergy = async (amount) => {
+const buyEnergy = async (amount) => {
     amount = XDai.parseXDai(amount);
+    console.log(amount)
     try {
         
         const pay = await contract.connect(signer).makePayment({
             value: amount,
         });
         // Wait for the transaction to be mined
-        const receipt = await pay.wait();
-        return {receipt: receipt, token: randNum()};
+        const receipt = await pay;
+        const randomToken = randNum.generateRandom16DigitNumber();
+        return {receipt: receipt, token: randomToken};
     } catch (e) {
         console.log('error', e.message);
         return e.message;
@@ -116,6 +129,4 @@ exports.withdraw = async (address) => {
     }
 }
 
-
-
-
+console.log(buyEnergy(0.003));
