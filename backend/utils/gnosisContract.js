@@ -38,7 +38,7 @@ abi = contract_abi.abi;
 // The address of smart contract
 const contractAddress = '0x822D15135492985B195CE96EC0190d51264daC92';
 const contract = new ethers.Contract(contractAddress, abi, provider);
-// const _sign = new ethers.Contract(contractAddress, abi, signer);
+const _sign = new ethers.Contract(contractAddress, abi, signer);
 // console.log(contract)
 
 
@@ -107,7 +107,7 @@ exports.buyEnergy = async (amount) => {
     // const _signer = accounts[0];
     try {
         
-        const pay = await contract.connect(signer).makePayment({
+        const pay = await _sign.makePayment({
             value: amount,
         });
         // Wait for the transaction to be mined
