@@ -101,9 +101,9 @@ exports.updatePrice = async (newPrice) => {
     }
 }
 
-exports.buyEnergy = async (amount) => {
+const buyEnergy = async (amount) => {
     amount = XDai.parseXDai(amount);
-    // console.log(amount)
+    console.log(amount)
     // const _signer = accounts[0];
     try {
         
@@ -111,8 +111,9 @@ exports.buyEnergy = async (amount) => {
             value: amount,
         });
         // Wait for the transaction to be mined
-        const receipt = await pay;
-        const randomToken = randNum.generateRandom16DigitNumber();
+        let receipt = await pay;
+        let randomToken = randNum.generateRandom16DigitNumber();
+        console.log('token :', randomToken)
         return {receipt: receipt, token: randomToken};
     } catch (e) {
         console.log('error', e.message);
@@ -130,4 +131,4 @@ exports.withdraw = async (address) => {
     }
 }
 
-// console.log(buyEnergy(0.003));
+console.log(buyEnergy(0.003));
