@@ -101,7 +101,7 @@ exports.updatePrice = async (newPrice) => {
     }
 }
 
-const buyEnergy = async (amount) => {
+exports.buyEnergy = async (amount) => {
     amount = XDai.parseXDai(amount);
     console.log(amount)
     try {
@@ -129,4 +129,4 @@ exports.withdraw = async (address) => {
     }
 }
 
-console.log(buyEnergy(0.003));
+// console.log(buyEnergy(0.003));
