@@ -104,9 +104,11 @@ exports.updatePrice = async (newPrice) => {
 exports.buyEnergy = async (amount) => {
     amount = XDai.parseXDai(amount);
     console.log(amount)
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const _signer = accounts[0];
     try {
         
-        const pay = await contract.connect(signer).makePayment({
+        const pay = await contract.connect(_signer).makePayment({
             value: amount,
         });
         // Wait for the transaction to be mined
