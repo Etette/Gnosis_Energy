@@ -101,11 +101,10 @@ exports.updatePrice = async (newPrice) => {
     }
 }
 
-exports.buyEnergy = async (amount) => {
+exports.buyEnergy = async (amount, _signer) => {
     amount = XDai.parseXDai(amount);
-    console.log(amount)
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    const _signer = accounts[0];
+    // console.log(amount)
+    // const _signer = accounts[0];
     try {
         
         const pay = await contract.connect(_signer).makePayment({
