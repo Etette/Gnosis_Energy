@@ -61,7 +61,6 @@ router.post('/updatePrice', async (req, res) => {
 });
 
 router.post('/buyEnergy', async (req, res) => {
-  const wallet = req.body.accounts;
   const amount = req.body.amount;
   try {
     const result = await routes.buyEnergy(amount, wallet);

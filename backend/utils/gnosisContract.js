@@ -26,7 +26,7 @@ const mnemonic = "frozen chronic report guilt choose yellow recipe orange mosqui
 
 const mnemonicWallet = ethers.Wallet.fromPhrase(mnemonic);
 console.log('pr.key', mnemonicWallet.privateKey);
-// console.log(mnemonicWallet.address);
+console.log(mnemonicWallet.address);
 const signer = new ethers.Wallet(mnemonicWallet.privateKey, provider);
 
 
@@ -101,13 +101,13 @@ exports.updatePrice = async (newPrice) => {
     }
 }
 
-exports.buyEnergy = async (amount, _signer) => {
+exports.buyEnergy = async (amount) => {
     amount = XDai.parseXDai(amount);
     // console.log(amount)
     // const _signer = accounts[0];
     try {
         
-        const pay = await contract.connect(_signer).makePayment({
+        const pay = await contract.connect(signer).makePayment({
             value: amount,
         });
         // Wait for the transaction to be mined
